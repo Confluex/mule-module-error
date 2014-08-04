@@ -1,6 +1,8 @@
-# Error Module
+# Processors
 
-This module enhances Mule's exception strategies by allowing contextual error handling. For instance, Mule 
+## error:try
+
+This processor enhances Mule's exception strategies by allowing contextual error handling. For instance, Mule 
 only allows you to configure a exception strategy for an entire flow.
 
 ```
