@@ -13,7 +13,7 @@ class ErrorModuleFunctionalTest extends FunctionalTestCase {
     }
 
     @Test
-    void errorShouldNotPreventProcessing() throws Exception {
+    void processingShouldNotStopFlowDueToError() throws Exception {
         def message = new DefaultMuleMessage("Joe", muleContext)
 
         def result = muleContext.client.send("vm://test.hello", message)
@@ -24,7 +24,7 @@ class ErrorModuleFunctionalTest extends FunctionalTestCase {
     }
 
     @Test
-    void errorShouldNotBreakForeachLoop() throws Exception {
+    void loopIterationShouldNotStopWhenErrorIsEncountered() throws Exception {
         int msgCount = 5
         List<String> payload = new ArrayList<String>()
         msgCount.times {
@@ -42,5 +42,12 @@ class ErrorModuleFunctionalTest extends FunctionalTestCase {
             assert muleContext.client.request(location, 1000)?.payloadAsString == "Message #${it}"
         }
 
+    }
+
+    @Test
+    void payloadFromExceptionStrategyShouldBeReturnedUponError() {
+        def msg = new DefaultMuleMessage("Unbreakable", muleContext)
+        def result = muleContext.client.send("vm://test.payload.modification", msg, 1000)
+        assert result.payloadAsString == "Fixed it"
     }
 }

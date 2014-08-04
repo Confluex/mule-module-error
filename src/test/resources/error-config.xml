@@ -41,10 +41,21 @@
         </foreach>
     </flow>
 
+    <flow name="ErrorStrategyShouldChangePayload">
+        <vm:inbound-endpoint path="test.payload.modification" exchange-pattern="request-response"/>
+        <error:try catch-ref="magicFixExceptionStrategy">
+            <test:component throwException="true"/>
+        </error:try>
+    </flow>
+
     <catch-exception-strategy name="testExceptionStrategy">
         <logger level="ERROR" category="TestExceptionStrategy" message="Oh no.. #[payload]"/>
         <logger level="ERROR" category="TestExceptionStrategy" message="Summary: #[exception.causeException.message]"/>
         <logger level="ERROR" category="TestExceptionStrategy" message="I should tell someone about this!"/>
         <vm:outbound-endpoint path="test.error"/>
+    </catch-exception-strategy>
+
+    <catch-exception-strategy name="magicFixExceptionStrategy">
+        <set-payload value="Fixed it"/>
     </catch-exception-strategy>
 </mule>
