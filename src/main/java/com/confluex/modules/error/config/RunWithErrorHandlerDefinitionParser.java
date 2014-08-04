@@ -7,8 +7,11 @@ import org.mule.config.spring.parsers.generic.MuleOrphanDefinitionParser;
 
 public class RunWithErrorHandlerDefinitionParser extends ParentContextDefinitionParser {
     public RunWithErrorHandlerDefinitionParser() {
-        super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new MuleOrphanDefinitionParser(
-                MessageProcessorChainFactoryBean.class, false));
+        super(
+                MuleOrphanDefinitionParser.ROOT_ELEMENT,
+                new MuleOrphanDefinitionParser(MessageProcessorChainFactoryBean.class, false)
+        );
         otherwise(new ChildDefinitionParser("messageProcessor", RunWithErrorHandlerFactoryBean.class));
+        addReference("catch-ref");
     }
 }

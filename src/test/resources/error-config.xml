@@ -26,7 +26,7 @@
     <flow name="ErrorShouldNotBreakForeachLoop">
         <vm:inbound-endpoint path="test.error.loop" exchange-pattern="request-response"/>
         <foreach counterVariableName="counter">
-            <error:try catch-ref="">
+            <error:try catch-ref="testExceptionStrategy">
                 <processor-chain>
                     <choice>
                         <when expression="#[counter % 2 == 0]">
@@ -40,7 +40,9 @@
                 </processor-chain>
             </error:try>
         </foreach>
-        <exception-strategy ref=""/>
-    </flow>
 
+    </flow>
+    <catch-exception-strategy name="testExceptionStrategy">
+        <logger level="ERROR" category="TestExceptionStrategy" message="Oh no.. #[payload]"/>
+    </catch-exception-strategy>
 </mule>
