@@ -36,19 +36,19 @@ class ErrorModuleFunctionalTest extends FunctionalTestCase {
     public void errorShouldNotBreakForeachLoop() throws Exception {
         int msgCount = 5
         List<String> payload = new ArrayList<String>()
-        for (int i = 0; i < msgCount; i++) {
-            payload.add("Message #${i}")
+        msgCount.times {
+            payload.add("Message #${it}")
         }
 
         def message = new DefaultMuleMessage(payload, muleContext)
         def result = muleContext.client.send("vm://test.loop", message)
         assert result?.payload == payload
 
-        for (int i = 0; i < msgCount; i++) {
-            int counter = i + 1 // mule's foreach counter is 1 based
-            boolean isEven = counter % 2 == 0
+        msgCount.times {
+            def counter = it + 1 // mule's foreach counter is 1 based
+            def isEven = counter % 2 == 0
             def location = isEven ? "vm://test.loop.success" : "vm://test.error"
-            assert  muleContext.client.request(location, 1000)?.payloadAsString ==  "Message #${i}"
+            assert  muleContext.client.request(location, 1000)?.payloadAsString ==  "Message #${it}"
         }
 
     }
