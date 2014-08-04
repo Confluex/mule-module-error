@@ -45,8 +45,8 @@ public class RunWithErrorHandlerMessageProcessor extends DefaultMessageProcessor
             if (exceptionHandler != null) {
                 return exceptionHandler.handleException(e, event);
             } else {
-                log.error("error:try handled an error: {}", e.getMessage());
-                return VoidMuleEvent.getInstance();
+                log.error("error:try handled an error:\n{}", e.getDetailedMessage());
+                return event;
             }
         }
     }

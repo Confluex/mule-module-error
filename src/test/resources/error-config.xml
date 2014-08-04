@@ -48,6 +48,13 @@
         </error:try>
     </flow>
 
+    <flow name="NoCatchRefShouldReturnNull">
+        <vm:inbound-endpoint path="test.no.catch" exchange-pattern="request-response"/>
+        <error:try>
+            <test:component throwException="true"/>
+        </error:try>
+    </flow>
+
     <catch-exception-strategy name="testExceptionStrategy">
         <logger level="ERROR" category="TestExceptionStrategy" message="Oh no.. #[payload]"/>
         <logger level="ERROR" category="TestExceptionStrategy" message="Summary: #[exception.causeException.message]"/>

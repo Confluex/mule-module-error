@@ -50,4 +50,12 @@ class ErrorModuleFunctionalTest extends FunctionalTestCase {
         def result = muleContext.client.send("vm://test.payload.modification", msg, 1000)
         assert result.payloadAsString == "Fixed it"
     }
+
+    @Test
+    void unConfiguredTryRefShouldReturnInputValue() {
+        def payload = "Live fast..."
+        def msg = new DefaultMuleMessage(payload, muleContext)
+        def result = muleContext.client.send("vm://test.no.catch", msg, 1000)
+        assert result.payload == payload
+    }
 }
