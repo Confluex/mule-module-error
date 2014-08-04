@@ -2,27 +2,18 @@ package com.confluex.modules.error
 
 import org.junit.Test
 import org.mule.DefaultMuleMessage
-import org.mule.api.MuleMessage
-import org.mule.api.client.LocalMuleClient
 import org.mule.tck.junit4.FunctionalTestCase
 
-import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertNotNull
-import static org.junit.Assert.assertNotNull
-import static org.junit.Assert.assertNotNull
-import static org.junit.Assert.assertNotNull
-
+import static org.junit.Assert.*
 
 class ErrorModuleFunctionalTest extends FunctionalTestCase {
     @Override
-    protected String getConfigFile() {
+    String getConfigFile() {
         return "error-config.xml"
     }
 
     @Test
-    public void errorShouldNotPreventProcessing() throws Exception {
+    void errorShouldNotPreventProcessing() throws Exception {
         def message = new DefaultMuleMessage("Joe", muleContext)
 
         def result = muleContext.client.send("vm://test.hello", message)
@@ -33,7 +24,7 @@ class ErrorModuleFunctionalTest extends FunctionalTestCase {
     }
 
     @Test
-    public void errorShouldNotBreakForeachLoop() throws Exception {
+    void errorShouldNotBreakForeachLoop() throws Exception {
         int msgCount = 5
         List<String> payload = new ArrayList<String>()
         msgCount.times {
@@ -48,7 +39,7 @@ class ErrorModuleFunctionalTest extends FunctionalTestCase {
             def counter = it + 1 // mule's foreach counter is 1 based
             def isEven = counter % 2 == 0
             def location = isEven ? "vm://test.loop.success" : "vm://test.error"
-            assert  muleContext.client.request(location, 1000)?.payloadAsString ==  "Message #${it}"
+            assert muleContext.client.request(location, 1000)?.payloadAsString == "Message #${it}"
         }
 
     }

@@ -17,21 +17,21 @@ import java.util.List;
 public class RunWithErrorHandlerMessageProcessor extends DefaultMessageProcessorChain {
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    protected MessagingExceptionHandler exceptionStrategy;
+    protected MessagingExceptionHandler exceptionHandler;
 
     public RunWithErrorHandlerMessageProcessor(List<MessageProcessor> processors) {
         super(processors);
     }
 
-    public void setExceptionStrategy(MessagingExceptionHandler exceptionStrategy) {
-        this.exceptionStrategy = exceptionStrategy;
+    public void setExceptionHandler(MessagingExceptionHandler exceptionHandler) {
+        this.exceptionHandler = exceptionHandler;
     }
 
     @Override
     public void initialise() throws InitialisationException {
         super.initialise();
-        if (exceptionStrategy instanceof Initialisable) {
-            Initialisable init = (Initialisable) exceptionStrategy;
+        if (exceptionHandler instanceof Initialisable) {
+            Initialisable init = (Initialisable) exceptionHandler;
             init.initialise();
         }
     }
@@ -42,8 +42,8 @@ public class RunWithErrorHandlerMessageProcessor extends DefaultMessageProcessor
         try {
             return super.doProcess(event);
         } catch (MuleException e) {
-            if (exceptionStrategy != null) {
-                return exceptionStrategy.handleException(e, event);
+            if (exceptionHandler != null) {
+                return exceptionHandler.handleException(e, event);
             } else {
                 log.error("error:try handled an error: {}", e.getMessage());
                 return VoidMuleEvent.getInstance();

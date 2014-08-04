@@ -1,10 +1,8 @@
 package com.confluex.modules.error.config;
 
 import com.confluex.modules.error.RunWithErrorHandlerMessageProcessor;
-import org.mule.api.exception.ExceptionHandler;
 import org.mule.api.exception.MessagingExceptionHandler;
 import org.mule.api.processor.MessageProcessor;
-import org.mule.exception.AbstractMessagingExceptionStrategy;
 import org.springframework.beans.factory.FactoryBean;
 
 import java.util.List;
@@ -30,7 +28,7 @@ public class RunWithErrorHandlerFactoryBean implements FactoryBean {
 
     public Object getObject() throws Exception {
         RunWithErrorHandlerMessageProcessor processor = new RunWithErrorHandlerMessageProcessor(processors);
-        processor.setExceptionStrategy(exceptionStrategy);
+        processor.setExceptionHandler(exceptionStrategy);
         return processor;
     }
 
