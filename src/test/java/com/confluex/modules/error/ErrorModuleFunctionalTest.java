@@ -35,7 +35,7 @@ public class ErrorModuleFunctionalTest extends FunctionalTestCase {
         int msgCount = 5;
         List<String> payload = new ArrayList<String>();
         for (int i = 0; i < msgCount; i++) {
-            payload.add("Joe " + i);
+            payload.add("Message #" + i);
         }
         DefaultMuleMessage message = new DefaultMuleMessage(payload, muleContext);
         MuleMessage result = client.send("vm://test.loop", message);
@@ -44,10 +44,12 @@ public class ErrorModuleFunctionalTest extends FunctionalTestCase {
         assertEquals(payload, result.getPayload());
 
         for (int i = 0; i < msgCount; i++) {
-            boolean isEven = i % 2 == 0;
+            int counter = i + 1; // mule's foreach counter is 1 based
+            boolean isEven = counter % 2 == 0;
             if (isEven) {
                 MuleMessage success = client.request("vm://test.loop.success", 5000);
                 assertNotNull("No success found for: " + i, success);
+                assertEquals(success.getPayloadAsString(), "Message #" + i);
             } else {
                 MuleMessage error = client.request("vm://test.error", 5000);
                 assertNotNull("No error found for: " + i, error);

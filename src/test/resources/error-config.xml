@@ -27,12 +27,14 @@
         <vm:inbound-endpoint path="test.loop" exchange-pattern="request-response"/>
         <foreach counterVariableName="counter">
             <error:try catch-ref="testExceptionStrategy">
+                <logger level="INFO" category="ErrorShouldNotBreakForeachLoop" message="Loop ##[counter]"/>
                 <choice>
                     <when expression="#[counter % 2 == 0]">
+                        <logger level="INFO" category="ErrorShouldNotBreakForeachLoop" message="Sending success: #[payload]"/>
                         <vm:outbound-endpoint path="test.loop.success"/>
                     </when>
                     <otherwise>
-                        <logger level="INFO" category="testFlow" message="Throwing a test exception.."/>
+                        <logger level="INFO" category="ErrorShouldNotBreakForeachLoop" message="Throwing a test exception"/>
                         <test:component throwException="true"/>
                     </otherwise>
                 </choice>
