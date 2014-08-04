@@ -43,7 +43,16 @@ public class ErrorModuleFunctionalTest extends FunctionalTestCase {
         assertNotNull(result);
         assertEquals(payload, result.getPayload());
 
-        MuleMessage error = client.request("vm://test.error", 1000);
-        assertNotNull(error);
+        for (int i = 0; i < msgCount; i++) {
+            boolean isEven = i % 2 == 0;
+            if (isEven) {
+                MuleMessage success = client.request("vm://test.loop.success", 5000);
+                assertNotNull("No success found for: " + i, success);
+            } else {
+                MuleMessage error = client.request("vm://test.error", 5000);
+                assertNotNull("No error found for: " + i, error);
+            }
+        }
+
     }
 }
