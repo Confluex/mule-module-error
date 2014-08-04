@@ -21,8 +21,12 @@ public class ErrorModuleFunctionalTest extends FunctionalTestCase {
     public void errorShouldNotPreventProcessing() throws Exception {
         LocalMuleClient client = muleContext.getClient();
         DefaultMuleMessage message = new DefaultMuleMessage("Joe", muleContext);
-        MuleMessage result = client.send("vm://test.error", message);
+
+        MuleMessage result = client.send("vm://test.hello", message);
         assertEquals("Hello Joe!", result.getPayloadAsString());
+
+        MuleMessage error = client.request("vm://test.error", 1000);
+        assertNotNull(error);
     }
 
     @Test
@@ -34,9 +38,12 @@ public class ErrorModuleFunctionalTest extends FunctionalTestCase {
             payload.add("Joe " + i);
         }
         DefaultMuleMessage message = new DefaultMuleMessage(payload, muleContext);
-        MuleMessage result = client.send("vm://test.error.loop", message);
+        MuleMessage result = client.send("vm://test.loop", message);
 
         assertNotNull(result);
         assertEquals(payload, result.getPayload());
+
+        MuleMessage error = client.request("vm://test.error", 1000);
+        assertNotNull(error);
     }
 }

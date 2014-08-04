@@ -12,8 +12,8 @@
 
 
     <flow name="ErrorShouldNotPreventProcessing">
-        <vm:inbound-endpoint path="test.error" exchange-pattern="request-response"/>
-        <error:try>
+        <vm:inbound-endpoint path="test.hello" exchange-pattern="request-response"/>
+        <error:try catch-ref="testExceptionStrategy">
             <processor-chain>
                 <logger level="INFO" category="ErrorShouldNotPreventProcessing" message="Throwing a test exception.."/>
                 <test:component throwException="true"/>
@@ -24,25 +24,24 @@
     </flow>
 
     <flow name="ErrorShouldNotBreakForeachLoop">
-        <vm:inbound-endpoint path="test.error.loop" exchange-pattern="request-response"/>
+        <vm:inbound-endpoint path="test.loop" exchange-pattern="request-response"/>
         <foreach counterVariableName="counter">
             <error:try catch-ref="testExceptionStrategy">
-                <processor-chain>
-                    <choice>
-                        <when expression="#[counter % 2 == 0]">
-                            <set-payload value="Hello #[payload]!"/>
-                        </when>
-                        <otherwise>
-                            <logger level="INFO" category="testFlow" message="Throwing a test exception.."/>
-                            <test:component throwException="true"/>
-                        </otherwise>
-                    </choice>
-                </processor-chain>
+                <choice>
+                    <when expression="#[counter % 2 == 0]">
+                        <vm:outbound-endpoint path="test.error.loop.success"/>
+                    </when>
+                    <otherwise>
+                        <logger level="INFO" category="testFlow" message="Throwing a test exception.."/>
+                        <test:component throwException="true"/>
+                    </otherwise>
+                </choice>
             </error:try>
         </foreach>
-
     </flow>
+
     <catch-exception-strategy name="testExceptionStrategy">
         <logger level="ERROR" category="TestExceptionStrategy" message="Oh no.. #[payload]"/>
+        <vm:outbound-endpoint path="test.error"/>
     </catch-exception-strategy>
 </mule>

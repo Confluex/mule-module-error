@@ -4,6 +4,8 @@ import org.mule.VoidMuleEvent;
 import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
 import org.mule.api.exception.MessagingExceptionHandler;
+import org.mule.api.lifecycle.Initialisable;
+import org.mule.api.lifecycle.InitialisationException;
 import org.mule.api.processor.MessageProcessor;
 import org.mule.processor.chain.DefaultMessageProcessorChain;
 import org.slf4j.Logger;
@@ -23,6 +25,15 @@ public class RunWithErrorHandlerMessageProcessor extends DefaultMessageProcessor
 
     public void setExceptionStrategy(MessagingExceptionHandler exceptionStrategy) {
         this.exceptionStrategy = exceptionStrategy;
+    }
+
+    @Override
+    public void initialise() throws InitialisationException {
+        super.initialise();
+        if (exceptionStrategy instanceof Initialisable) {
+            Initialisable init = (Initialisable) exceptionStrategy;
+            init.initialise();
+        }
     }
 
     @Override
