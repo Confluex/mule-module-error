@@ -1,6 +1,6 @@
 # Error Module
 
-This module enhances mule exception strategies by allowing contextual error handling. For instance, Mule 
+This module enhances Mule's exception strategies by allowing contextual error handling. For instance, Mule 
 only allows you to configure a exception strategy for an entire flow.
 
 ```
