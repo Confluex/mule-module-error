@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+      xmlns:error="http://www.mulesoft.org/schema/mule/error"
+      xmlns:test="http://www.mulesoft.org/schema/mule/test"
+      xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+        http://www.mulesoft.org/schema/mule/error http://www.mulesoft.org/schema/mule/error/current/mule-error.xsd
+        http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd">
+
+
+    <flow name="ErrorShouldNotPreventProcessing">
+        <vm:inbound-endpoint path="test.error" exchange-pattern="request-response"/>
+        <error:try>
+            <processor-chain>
+                <logger level="INFO" category="ErrorShouldNotPreventProcessing" message="Throwing a test exception.."/>
+                <test:component throwException="true"/>
+                <logger level="INFO" category="ErrorShouldNotPreventProcessing" message="I don't really exist!"/>
+            </processor-chain>
+        </error:try>
+        <set-payload value="Hello #[payload]!"/>
+    </flow>
+
+    <flow name="ErrorShouldNotBreakForeachLoop">
+        <vm:inbound-endpoint path="test.error.loop" exchange-pattern="request-response"/>
+        <foreach counterVariableName="counter">
+            <error:try catch-ref="">
+                <processor-chain>
+                    <choice>
+                        <when expression="#[counter % 2 == 0]">
+                            <set-payload value="Hello #[payload]!"/>
+                        </when>
+                        <otherwise>
+                            <logger level="INFO" category="testFlow" message="Throwing a test exception.."/>
+                            <test:component throwException="true"/>
+                        </otherwise>
+                    </choice>
+                </processor-chain>
+            </error:try>
+        </foreach>
+        <exception-strategy ref=""/>
+    </flow>
+
+</mule>
