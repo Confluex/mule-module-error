@@ -44,7 +44,7 @@ execution would have stopped on the first error and the entire collection passed
 
 You can add the Maven dependency to your project's pom.xml:
 
-```
+```xml
 <dependency>
     <groupId>com.confluex.modules</groupId>
     <artifactId>mule-module-error</artifactId>
