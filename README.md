@@ -55,7 +55,21 @@ You can add the Maven dependency to your project's pom.xml:
 </dependency>
 ```
 
-> TODO: Manual installation instructions
+For SNAPSHOT releases, please configure the Sonatype snapshot repository in your M2_HOME/settings.xml or your pom.xml
+
+```xml
+<repository>
+    <id>sonatype-snapshots</id>
+    <name>Sonatype OSS Maven Repo (snapshots)</name>
+    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
+    <releases>
+        <enabled>false</enabled>
+    </releases>
+</repository>
+```
 
 
 Configure the namespace for your flow:
