@@ -84,3 +84,7 @@ Configure the namespace for your flow:
 ">
 </mule>
 ```
+
+> The module is not available through the AnyPoint Studio drag and drop pallet due to a 
+> [bug in devkit](https://www.mulesoft.org/jira/browse/MULE-7793). Please vote if you would like to see this 
+> implemented.
