@@ -2,7 +2,8 @@
 
 ## error:try
 
-This processor enhances Mule's exception strategies by allowing contextual error handling:
+This processor enhances Mule's exception strategies by allowing contextual error handling. Think of it like a try
+catch block in code.
 
 ```xml
 <flow name="AwesomeFlow">
