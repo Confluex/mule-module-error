@@ -33,7 +33,7 @@ execution would have stopped on the first error and the entire collection passed
 
 | Attribute     | Description   |
 | ------------- |---------------| 
-| catch-ref     | Reference to a global exception strategy. If un-configured, any errors will be logged and the input payload returned.|
+| catch-ref     | Reference to a global exception strategy. The value returned from the exception strategy will be returned back to the flow. If un-configured, any errors will be logged and the input payload returned.|
 
 
 # Mule supported versions
