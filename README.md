@@ -2,8 +2,7 @@
 
 ## error:try
 
-This processor enhances Mule's exception strategies by allowing contextual error handling instead of the configured
-error handler for the entire flow: 
+This processor enhances Mule's exception strategies by allowing contextual error handling:
 
 ```xml
 <flow name="AwesomeFlow">
@@ -28,8 +27,9 @@ error handler for the entire flow:
 Here we execute the cloud operation with its own error handler (the catch-ref) in context to the 
 foreach loop. 
 
-> Without this, the rest of the messages in the collection would not have been processed. The flow
-> execution would have stopped on the first error and the entire collection passed to the flow's error handler.
+> Without this, the rest of the messages in the collection would not have been processed after the first error. This
+> probably isn't what you'd want in most cases. Defining your error handling in a smaller scope can help you avoid
+> these types of problems.
 
 
 
