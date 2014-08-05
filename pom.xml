@@ -25,7 +25,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.5</jdk.version>
         <mule.version>3.5.0</mule.version>
         <spring.version>3.2.1.RELEASE</spring.version>
         <groovy.version>1.8.6</groovy.version>
