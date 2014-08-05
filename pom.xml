@@ -23,6 +23,23 @@
             <url>http://dev.confluex.com/nexus/content/repositories/public-snapshots</url>
         </snapshotRepository>
     </distributionManagement>
+    <description>
+        Error handling extensions for Mule ESB
+    </description>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>mcantrell</id>
+            <name>Mike Cantrell</name>
+            <email>mike.humansonly@devnull.org</email>
+        </developer>
+    </developers>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
