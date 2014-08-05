@@ -26,8 +26,10 @@ error handler for the entire flow:
 ```
 
 Here we execute the cloud operation with its own error handler (the catch-ref) in context to the 
-foreach loop. Without this, the rest of the messages in the collection would not have been processed. The flow
-execution would have stopped on the first error and the entire collection passed to the flow's error handler.
+foreach loop. 
+
+> Without this, the rest of the messages in the collection would not have been processed. The flow
+> execution would have stopped on the first error and the entire collection passed to the flow's error handler.
 
 
 
