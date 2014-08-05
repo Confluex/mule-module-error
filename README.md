@@ -5,7 +5,7 @@
 This processor enhances Mule's exception strategies by allowing contextual error handling instead of the configured
 error handler for the entire flow: 
 
-```
+```xml
 <flow name="AwesomeFlow">
     <inbound-endpoint ref="stuffHappened"/>
     <message-processor/>     
@@ -33,7 +33,7 @@ execution would have stopped on the first error and the entire collection passed
 
 | Attribute     | Description   |
 | ------------- |---------------| 
-| catch-ref     | Reference to a global exception strategy. If un-configured, any errors will be logged and the current payload returned.|
+| catch-ref     | Reference to a global exception strategy. If un-configured, any errors will be logged and the input payload returned.|
 
 
 # Mule supported versions
@@ -57,7 +57,7 @@ You can add the Maven dependency to your project's pom.xml:
 
 Configure the namespace for your flow:
 
-```
+```xml
 <mule xmlns="http://www.mulesoft.org/schema/mule/core"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xmlns:error="http://www.mulesoft.org/schema/mule/error"
