@@ -48,7 +48,7 @@ You can add the Maven dependency to your project's pom.xml:
 
 ```xml
 <dependency>
-    <groupId>com.confluex.modules</groupId>
+    <groupId>com.confluex</groupId>
     <artifactId>mule-module-error</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
