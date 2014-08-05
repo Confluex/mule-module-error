@@ -8,7 +8,7 @@ import static org.junit.Assert.*
 
 class ErrorModuleFunctionalTest extends FunctionalTestCase {
     @Override
-    String getConfigFile() {
+    String getConfigResources() {
         return "error-config.xml"
     }
 
